@@ -1,0 +1,12 @@
+version: "3.8"
+
+services:
+  bot:
+    build: .
+    container_name: troll-bot
+    restart: unless-stopped
+    env_file: .env
+    volumes:
+      - ./sounds:/app/sounds
+    environment:
+      - NODE_ENV=production
