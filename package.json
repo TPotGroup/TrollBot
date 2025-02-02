@@ -1,0 +1,21 @@
+{
+  "name": "disc-torture",
+  "version": "1.0.0",
+  "type": "module",
+  "scripts": {
+    "start": "bun run src/index.ts",
+    "dev": "bun --watch run src/index.ts",
+    "build": "bun build ./src/index.ts --outdir ./dist",
+    "type-check": "tsc --noEmit"
+  },
+  "dependencies": {
+    "discord.js": "14.14.1",
+    "@discordjs/voice": "0.16.1",
+    "dotenv": "16.4.5"
+  },
+  "devDependencies": {
+    "typescript": "5.3.3",
+    "bun-types": "latest",
+    "@types/node": "20.11.19"
+  }
+} 
