@@ -9,13 +9,15 @@
     "type-check": "tsc --noEmit"
   },
   "dependencies": {
-    "discord.js": "14.14.1",
     "@discordjs/voice": "0.16.1",
-    "dotenv": "16.4.5"
+    "discord.js": "14.14.1",
+    "dotenv": "16.4.5",
+    "libsodium-wrappers": "^0.7.15",
+    "sodium": "^3.0.2"
   },
   "devDependencies": {
     "typescript": "5.3.3",
     "bun-types": "latest",
     "@types/node": "20.11.19"
   }
-} 
+}
