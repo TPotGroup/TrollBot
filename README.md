@@ -4,9 +4,10 @@ A Discord bot designed for harmless trolling with voice channel features, built 
 
 ## Features
 
-- Random voice channel kidnapping with screaming sound
+- Random voice channel kidnapping with random sound effects
 - Targeted voice channel kidnapping
 - Punishment system that locks users in a specific voice channel
+- Support for multiple audio formats (MP3, WAV, OGG)
 
 ## Prerequisites
 
@@ -29,7 +30,11 @@ DISCORD_TOKEN=your_bot_token_here
 COMMAND_PREFIX=!
 ```
 
-3. Add a sound file named `scream.mp3` in the `sounds` directory
+3. Add sound files to the `sounds` directory:
+
+   - Supported formats: `.mp3`, `.wav`, `.ogg`
+   - The bot will randomly select one of these sounds each time
+   - You can add or remove sounds while the bot is running
 
 4. Run the bot:
 
@@ -46,7 +51,7 @@ bun start
 ### Using Docker Compose (Recommended)
 
 1. Create a `.env` file with your Discord bot token
-2. Add your `scream.mp3` file to the `sounds` directory
+2. Add your sound files to the `sounds` directory
 3. Build and run the container:
 
 ```bash
@@ -85,15 +90,25 @@ docker run -d \
    - Deploy the service
 
 2. After deployment:
-   - Upload your `scream.mp3` file to the sounds directory in the container
+   - Create a `sounds` directory in the container
+   - Upload your sound files (MP3, WAV, or OGG) to the sounds directory
+   - The bot will automatically use any new sounds you add
    - The bot will automatically restart when configuration changes
 
 ## Commands
 
-- `!kidnap @user` - Kidnap a specific user, play sound, and return them
+- `!kidnap @user` - Kidnap a specific user, play a random sound, and return them
 - `!randomkidnap` - Randomly kidnap someone from your current voice channel
 - `!punish @user` - Force a user to stay in the punishment channel
 - `!unpunish @user` - Remove punishment from a user
+
+## Sound Files
+
+- Place your sound files in the `sounds` directory
+- Supported formats: `.mp3`, `.wav`, `.ogg`
+- Files can be added/removed while the bot is running
+- The bot will randomly select one sound for each kidnapping
+- No specific naming convention required
 
 ## Required Bot Permissions
 

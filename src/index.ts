@@ -22,6 +22,7 @@ import {
 import { config } from "dotenv";
 import { join } from "path";
 import { fileURLToPath } from "url";
+import { readdir } from "fs/promises";
 
 // Configure environment variables
 config();
@@ -31,6 +32,10 @@ const __dirname = fileURLToPath(new URL(".", import.meta.url));
 
 // Constants
 const COMMAND_PREFIX = process.env.COMMAND_PREFIX || "!";
+const SOUNDS_DIR = join(__dirname, "../sounds");
+
+// Supported audio formats
+const SUPPORTED_FORMATS = [".mp3", ".wav", ".ogg"];
 
 interface BotConfig {
   token: string;
@@ -102,10 +107,38 @@ async function createVoiceConnection(
   }
 }
 
+async function getRandomSoundFile(): Promise<string | null> {
+  try {
+    const files = await readdir(SOUNDS_DIR);
+    const soundFiles = files.filter((file) =>
+      SUPPORTED_FORMATS.some((format) => file.toLowerCase().endsWith(format))
+    );
+
+    if (soundFiles.length === 0) {
+      console.error("No sound files found in sounds directory!");
+      return null;
+    }
+
+    const randomFile =
+      soundFiles[Math.floor(Math.random() * soundFiles.length)];
+    return join(SOUNDS_DIR, randomFile);
+  } catch (error) {
+    console.error("Error reading sounds directory:", error);
+    return null;
+  }
+}
+
 async function playScreamSound(
   channel: VoiceChannel | StageChannel
 ): Promise<void> {
   try {
+    // Get a random sound file
+    const soundFile = await getRandomSoundFile();
+    if (!soundFile) {
+      console.error("No sound file available to play");
+      return;
+    }
+
     // Disconnect any existing connection
     const existingConnection = getVoiceConnection(channel.guild.id);
     if (existingConnection) {
@@ -118,9 +151,7 @@ async function playScreamSound(
       return;
     }
 
-    const resource = createAudioResource(
-      join(__dirname, "../sounds/scream.mp3")
-    );
+    const resource = createAudioResource(soundFile);
 
     connection.subscribe(player);
     player.play(resource);
